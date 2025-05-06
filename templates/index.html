@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Entrate/Uscite</title>
+</head>
+<body>
+    <h1>Registro Entrate/Uscite</h1>
+    <form action="/aggiungi" method="POST">
+        <input type="text" name="nome" placeholder="Nome" required>
+        <input type="text" name="cognome" placeholder="Cognome" required>
+        <input type="date" name="data" required>
+        <input type="time" name="ora" required>
+        <input type="text" name="giustificazione" placeholder="Giustificazione">
+        <button type="submit">Aggiungi</button>
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Data</th>
+                <th>Ora</th>
+                <th>Giustificazione</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in registro %}
+            <tr>
+                <td>{{ entry.nome }}</td>
+                <td>{{ entry.cognome }}</td>
+                <td>{{ entry.data }}</td>
+                <td>{{ entry.ora }}</td>
+                <td>{{ entry.giustificazione }}</td>
+                <td>
+                    <form action="/modifica/{{ entry.doc_id }}" method="POST" style="display:inline;">
+                        <input type="text" name="nome" value="{{ entry.nome }}" required>
+                        <input type="text" name="cognome" value="{{ entry.cognome }}" required>
+                        <input type="date" name="data" value="{{ entry.data }}" required>
+                        <input type="time" name="ora" value="{{ entry.ora }}" required>
+                        <input type="text" name="giustificazione" value="{{ entry.giustificazione }}">
+                        <button type="submit">Modifica</button>
+                    </form>
+                    <form action="/elimina/{{ entry.doc_id }}" method="POST" style="display:inline;">
+                        <button type="submit">Elimina</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
